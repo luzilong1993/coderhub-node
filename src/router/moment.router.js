@@ -16,6 +16,8 @@ momentRouter.post('/', verifyAuth, create);
 
 momentRouter.get('/', list);
 
-momentRouter.get('/:momentId', detail)
+momentRouter.get('/:momentId', detail);
+
+momentRouter.patch('/:momentId', verifyAuth)
 
 module.exports = momentRouter;
