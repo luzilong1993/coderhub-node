@@ -4,7 +4,6 @@ const { PRIVATE_KEY } = require('../app/config')
 class AuthController {
     async login(ctx, next) {
 
-        console.log(ctx.user);
         const { id, name } = ctx.user;
 
         const token = jwt.sign({ id, name }, PRIVATE_KEY, {
