@@ -38,6 +38,13 @@ class MomentService {
 
         return result;
     }
+
+    async remove(momentId) {
+        const statement = `DELETE FROM moment WHERE id = ?;`;
+        const [result] = await connection.execute(statement, [momentId]);
+
+        return result;
+    }
 }
 
 module.exports = new MomentService();
