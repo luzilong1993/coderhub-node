@@ -70,7 +70,6 @@ const verifyPermission = async (ctx, next) => {
     const resourceId = ctx.params[resourceKey];
     const { id } = ctx.user;
 
-    console.log(resourceKey,tableName,resourceId);
 
     try {
         const isPermission = await authService.checkResource(tableName, resourceId, id);
