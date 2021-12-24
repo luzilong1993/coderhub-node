@@ -1,0 +1,27 @@
+const connection = require('../app/database');
+
+class LabelService {
+
+    async create(name) {
+        try {
+            const statement = `INSERT INTO label (name) VALUES (?);`;
+            const [result] = await connection.execute(statement, [name]);
+            return result;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async getLabelByName(name) {
+        try {
+            const statement = `SELECT * FROM label WHERE name = ?;`;
+            const [result] = await connection.execute(statement, [name]);
+            return result[0];
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+}
+
+module.exports = new LabelService();

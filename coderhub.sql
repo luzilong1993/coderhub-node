@@ -11,7 +11,7 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 17/12/2021 15:40:09
+ Date: 24/12/2021 09:53:30
 */
 
 SET NAMES utf8mb4;
@@ -48,6 +48,49 @@ INSERT INTO `brand` VALUES (100, '华为', 'www.huawei.com', 2);
 COMMIT;
 
 -- ----------------------------
+-- Table structure for comment
+-- ----------------------------
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `content` varchar(1000) NOT NULL,
+  `moment_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `comment_id` int DEFAULT NULL,
+  `createAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `moment_id` (`moment_id`),
+  KEY `user_id` (`user_id`),
+  KEY `comment_id` (`comment_id`),
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`moment_id`) REFERENCES `moment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+BEGIN;
+INSERT INTO `comment` VALUES (3, '最好的人是我', 2, 5, NULL, '2021-12-23 14:37:41', '2021-12-23 14:37:41');
+INSERT INTO `comment` VALUES (4, '再加', 2, 5, NULL, '2021-12-23 14:37:53', '2021-12-23 14:37:53');
+INSERT INTO `comment` VALUES (5, '再加', 2, 5, NULL, '2021-12-23 14:37:55', '2021-12-23 14:37:55');
+INSERT INTO `comment` VALUES (6, '再加', 2, 5, NULL, '2021-12-23 14:37:56', '2021-12-23 14:37:56');
+INSERT INTO `comment` VALUES (7, '再加', 2, 5, NULL, '2021-12-23 14:37:57', '2021-12-23 14:37:57');
+INSERT INTO `comment` VALUES (8, '再加', 2, 5, NULL, '2021-12-23 14:37:58', '2021-12-23 14:37:58');
+INSERT INTO `comment` VALUES (9, '再加', 3, 5, NULL, '2021-12-23 14:38:04', '2021-12-23 14:38:04');
+INSERT INTO `comment` VALUES (10, '再加', 3, 5, NULL, '2021-12-23 14:38:05', '2021-12-23 14:38:05');
+INSERT INTO `comment` VALUES (11, '再加', 3, 5, NULL, '2021-12-23 14:38:05', '2021-12-23 14:38:05');
+INSERT INTO `comment` VALUES (12, '再加', 3, 5, NULL, '2021-12-23 14:38:06', '2021-12-23 14:38:06');
+INSERT INTO `comment` VALUES (14, '是我是我就是我', 2, 5, 3, '2021-12-23 14:38:24', '2021-12-23 14:38:24');
+INSERT INTO `comment` VALUES (15, '是我是我就是我', 2, 5, 3, '2021-12-23 14:38:25', '2021-12-23 14:38:25');
+INSERT INTO `comment` VALUES (16, '是我是我就是我', 2, 5, 3, '2021-12-23 14:38:26', '2021-12-23 14:38:26');
+INSERT INTO `comment` VALUES (17, '是我是我就是我', 2, 5, 3, '2021-12-23 14:38:27', '2021-12-23 14:38:27');
+INSERT INTO `comment` VALUES (18, '是我是我就是我', 2, 5, 3, '2021-12-23 14:38:27', '2021-12-23 14:38:27');
+INSERT INTO `comment` VALUES (19, '是我是我就是我', 2, 5, 3, '2021-12-23 14:38:28', '2021-12-23 14:38:28');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for courses
 -- ----------------------------
 DROP TABLE IF EXISTS `courses`;
@@ -74,6 +117,89 @@ INSERT INTO `courses` VALUES (15, '数学', 888);
 INSERT INTO `courses` VALUES (16, '历史', 99);
 INSERT INTO `courses` VALUES (17, '物理', 999);
 INSERT INTO `courses` VALUES (18, '地理', 333);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for label
+-- ----------------------------
+DROP TABLE IF EXISTS `label`;
+CREATE TABLE `label` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) NOT NULL,
+  `createAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of label
+-- ----------------------------
+BEGIN;
+INSERT INTO `label` VALUES (1, '前端', '2021-12-23 15:40:06', '2021-12-23 15:40:06');
+INSERT INTO `label` VALUES (2, '文学', '2021-12-23 15:42:38', '2021-12-23 15:42:38');
+INSERT INTO `label` VALUES (3, '爱情', '2021-12-23 15:42:42', '2021-12-23 15:42:42');
+INSERT INTO `label` VALUES (4, '青春', '2021-12-23 15:42:46', '2021-12-23 15:42:46');
+INSERT INTO `label` VALUES (5, '标签一', '2021-12-23 16:37:23', '2021-12-23 16:37:23');
+INSERT INTO `label` VALUES (6, '标签二', '2021-12-23 16:38:33', '2021-12-23 16:38:33');
+INSERT INTO `label` VALUES (7, '标签三', '2021-12-23 16:54:32', '2021-12-23 16:54:32');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for moment
+-- ----------------------------
+DROP TABLE IF EXISTS `moment`;
+CREATE TABLE `moment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `content` varchar(1000) NOT NULL,
+  `user_id` int NOT NULL,
+  `createAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `moment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of moment
+-- ----------------------------
+BEGIN;
+INSERT INTO `moment` VALUES (2, '我可以微笑着听你说你们的故事，但真的打不起笑脸听你说你们的关系。', 1, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (3, '有人说，青春仿佛是朵素洁的昙花，来不及铺张、来不及遐思，甚至来不及弥补欠缺和瑕庛，就那么匆匆地谢了。', 2, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (4, '多少次又多少次，回忆把生活划成一个圈，而我们在原地转了无数次，无法解脱。总是希望回到最初相识的地点，如果能够再一次选择的话，以为可以爱得更单纯。', 3, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (5, '人生就像一座山，重要的不是它的高低，而在于灵秀；人生就像一场雨，重要的不是它的大小，而在于及时。', 4, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (6, '想洗澡吗？不要到外面等待下雨；想成功吗？不要空等机遇的到来。', 5, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (7, '因为爱心，流浪的人们才能重返家园；因为爱心，疲惫的灵魂才能活力如初。渴望爱心，如同星光渴望彼此辉映；渴望爱心，如同世纪之歌渴望永远被唱下去。', 1, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (8, '放开你，不是因为我不爱你，是因为我太爱你', 2, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (9, '如果爱情只是路过，又何必到此一游。', 3, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (10, '母爱是一缕阳光，让你的心灵即便在寒冷的冬天也能感受到温暖如春；母爱是一泓清泉，让你的情感即使蒙上岁月的风尘仍然清澈澄净。', 3, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (11, '爱是一盏灯，黑暗中照亮前行的远方；爱是一首诗，冰冷中温暖渴求的心房；爱是夏日的风，是冬日的阳，是春日的雨，是秋日的果。', 4, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (12, '有一种爱，明明是深爱，却说不出来；有一种爱，明明想放弃，却无法放弃；有一种爱，明知是煎熬，却又躱不开；有一种爱，明知无前路，心却早已收不回来。', 2, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+INSERT INTO `moment` VALUES (13, '听见某个名字，想起某些事情，这个城市安静的让人心颤。', 3, '2021-12-22 12:08:33', '2021-12-22 12:08:33');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for moment_label
+-- ----------------------------
+DROP TABLE IF EXISTS `moment_label`;
+CREATE TABLE `moment_label` (
+  `moment_id` int NOT NULL,
+  `label_id` int NOT NULL,
+  `createAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`moment_id`,`label_id`),
+  KEY `label_id` (`label_id`),
+  CONSTRAINT `moment_label_ibfk_1` FOREIGN KEY (`moment_id`) REFERENCES `moment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `moment_label_ibfk_2` FOREIGN KEY (`label_id`) REFERENCES `label` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of moment_label
+-- ----------------------------
+BEGIN;
+INSERT INTO `moment_label` VALUES (6, 5, '2021-12-23 16:54:14', '2021-12-23 16:54:14');
+INSERT INTO `moment_label` VALUES (6, 6, '2021-12-23 16:54:14', '2021-12-23 16:54:14');
+INSERT INTO `moment_label` VALUES (6, 7, '2021-12-23 16:54:32', '2021-12-23 16:54:32');
 COMMIT;
 
 -- ----------------------------

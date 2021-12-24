@@ -1,0 +1,10 @@
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('brand');
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('comment');
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('courses');
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('label');
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('moment');
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('moment_label');
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('products');
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('students');
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('students_select_courses');
+INSERT INTO `DDL-对数据表的操作` (`Tables_in_coderhub`) VALUES ('users');
