@@ -59,7 +59,6 @@ class MomentController {
             }
         }
 
-        console.log(labels);
         ctx.body = '添加标签';
     }
 }

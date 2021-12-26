@@ -1,7 +1,8 @@
 const Router = require('koa-router');
 
 const {
-    create
+    create,
+    list
 } = require('../controller/label.controller')
 
 const {
@@ -10,6 +11,8 @@ const {
 
 const labelRouter = new Router({ prefix: '/label' });
 
-labelRouter.post('/', verifyAuth,create)
+labelRouter.post('/', verifyAuth,create);
+
+labelRouter.get('/',verifyAuth,list);
 
 module.exports = labelRouter;
