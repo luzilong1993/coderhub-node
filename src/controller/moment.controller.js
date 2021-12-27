@@ -1,4 +1,8 @@
+const fs = require('fs');
+
 const momentService = require('../service/moment.service');
+const fileService = require('../service/file.service');
+const { PICTURE_PATH } = require('../constants/file-path')
 
 class MomentController {
     async create(ctx, next) {
@@ -60,6 +64,20 @@ class MomentController {
         }
 
         ctx.body = '添加标签';
+    }
+
+    async fileInfo(ctx, next) {
+        const { filename } = ctx.params;
+        const { type } = ctx.query;
+        const fileInfo = await fileService.getFileByFileName(filename);
+
+        const types = ['small', 'middle', 'large'];
+
+        if (types.some(item => item === types)) {
+            filename = filename + '-' + type;
+        }
+        ctx.response.set('content-type', fileInfo.mimetype);
+        ctx.body = fs.createReadStream(`${PICTURE_PATH}/${filename}`);
     }
 }
 
