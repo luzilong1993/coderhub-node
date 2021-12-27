@@ -11,11 +11,38 @@
  Target Server Version : 80027
  File Encoding         : 65001
 
- Date: 24/12/2021 09:53:30
+ Date: 27/12/2021 15:56:09
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for avatar
+-- ----------------------------
+DROP TABLE IF EXISTS `avatar`;
+CREATE TABLE `avatar` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `filename` varchar(100) NOT NULL,
+  `mimetype` varchar(30) DEFAULT NULL,
+  `size` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `createAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `filename` (`filename`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `avatar_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of avatar
+-- ----------------------------
+BEGIN;
+INSERT INTO `avatar` VALUES (1, '39d07596a3544d15ac012a27e0183122', 'image/jpeg', 12652, 5, '2021-12-27 10:56:40', '2021-12-27 10:56:40');
+INSERT INTO `avatar` VALUES (2, 'a2d3b69cebe0340bb8be11d3aaddcd84', 'image/jpeg', 12652, 5, '2021-12-27 11:33:54', '2021-12-27 11:33:54');
+INSERT INTO `avatar` VALUES (3, 'cf1c5eb2688abc20ce5227d0425289fe', 'image/jpeg', 12652, 5, '2021-12-27 11:40:25', '2021-12-27 11:40:25');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for brand
@@ -99,7 +126,7 @@ CREATE TABLE `courses` (
   `name` varchar(20) NOT NULL,
   `price` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of courses
@@ -117,6 +144,47 @@ INSERT INTO `courses` VALUES (15, '数学', 888);
 INSERT INTO `courses` VALUES (16, '历史', 99);
 INSERT INTO `courses` VALUES (17, '物理', 999);
 INSERT INTO `courses` VALUES (18, '地理', 333);
+INSERT INTO `courses` VALUES (19, '英语', 100);
+INSERT INTO `courses` VALUES (20, '语文', 666);
+INSERT INTO `courses` VALUES (21, '数学', 888);
+INSERT INTO `courses` VALUES (22, '历史', 99);
+INSERT INTO `courses` VALUES (23, '物理', 999);
+INSERT INTO `courses` VALUES (24, '地理', 333);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for file
+-- ----------------------------
+DROP TABLE IF EXISTS `file`;
+CREATE TABLE `file` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `filename` varchar(100) NOT NULL,
+  `mimetype` varchar(30) DEFAULT NULL,
+  `size` int DEFAULT NULL,
+  `moment_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `createAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `filename` (`filename`),
+  KEY `user_id` (`user_id`),
+  KEY `moment_id` (`moment_id`),
+  CONSTRAINT `file_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `file_ibfk_2` FOREIGN KEY (`moment_id`) REFERENCES `moment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of file
+-- ----------------------------
+BEGIN;
+INSERT INTO `file` VALUES (1, '0ff3bf990a4b936c98b654d6bfbd6b83', 'image/jpeg', 12652, 2, 5, '2021-12-27 12:00:38', '2021-12-27 12:00:38');
+INSERT INTO `file` VALUES (2, 'e1ab5cc6e9085ab269dfe6853d2060f5', 'image/jpeg', 12652, 2, 5, '2021-12-27 12:00:38', '2021-12-27 12:00:38');
+INSERT INTO `file` VALUES (3, 'c0a347f610b7dca572e5e54f9a16bcc8', 'image/jpeg', 12652, 2, 5, '2021-12-27 14:18:36', '2021-12-27 14:18:36');
+INSERT INTO `file` VALUES (4, 'c90addeb7d1499034bf385e616de07f8', 'image/jpeg', 12652, 2, 5, '2021-12-27 14:18:37', '2021-12-27 14:18:37');
+INSERT INTO `file` VALUES (5, '9386b21de62dcfc9f7d069191758e874', 'image/jpeg', 12652, 2, 5, '2021-12-27 14:21:12', '2021-12-27 14:21:12');
+INSERT INTO `file` VALUES (6, '2c4a961ea68c0a6e000e413edb6fde5c', 'image/jpeg', 12652, 2, 5, '2021-12-27 14:21:12', '2021-12-27 14:21:12');
+INSERT INTO `file` VALUES (7, '0ed2173e19c7b86d3a0ef3b7d4357dfe', 'image/png', 25783, 2, 5, '2021-12-27 14:22:56', '2021-12-27 14:22:56');
+INSERT INTO `file` VALUES (8, '5a0e5d732db04e4dd795329490f29021', 'image/png', 25783, 2, 5, '2021-12-27 14:22:56', '2021-12-27 14:22:56');
 COMMIT;
 
 -- ----------------------------
@@ -337,7 +405,7 @@ CREATE TABLE `students` (
   `name` varchar(20) NOT NULL,
   `age` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of students
@@ -353,6 +421,11 @@ INSERT INTO `students` VALUES (17, 'tom', 22);
 INSERT INTO `students` VALUES (18, 'lilei', 25);
 INSERT INTO `students` VALUES (19, 'lucy', 16);
 INSERT INTO `students` VALUES (20, 'lily', 20);
+INSERT INTO `students` VALUES (21, 'why', 18);
+INSERT INTO `students` VALUES (22, 'tom', 22);
+INSERT INTO `students` VALUES (23, 'lilei', 25);
+INSERT INTO `students` VALUES (24, 'lucy', 16);
+INSERT INTO `students` VALUES (25, 'lily', 20);
 COMMIT;
 
 -- ----------------------------
@@ -368,7 +441,7 @@ CREATE TABLE `students_select_courses` (
   KEY `course_id` (`course_id`),
   CONSTRAINT `students_select_courses_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `students_select_courses_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of students_select_courses
@@ -388,6 +461,13 @@ INSERT INTO `students_select_courses` VALUES (21, 3, 2);
 INSERT INTO `students_select_courses` VALUES (22, 3, 4);
 INSERT INTO `students_select_courses` VALUES (23, 5, 3);
 INSERT INTO `students_select_courses` VALUES (24, 5, 4);
+INSERT INTO `students_select_courses` VALUES (25, 1, 1);
+INSERT INTO `students_select_courses` VALUES (26, 1, 3);
+INSERT INTO `students_select_courses` VALUES (27, 1, 4);
+INSERT INTO `students_select_courses` VALUES (28, 3, 2);
+INSERT INTO `students_select_courses` VALUES (29, 3, 4);
+INSERT INTO `students_select_courses` VALUES (30, 5, 3);
+INSERT INTO `students_select_courses` VALUES (31, 5, 4);
 COMMIT;
 
 -- ----------------------------
@@ -400,6 +480,7 @@ CREATE TABLE `users` (
   `password` varchar(40) DEFAULT NULL,
   `createAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updateAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `avatar_url` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -408,11 +489,11 @@ CREATE TABLE `users` (
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES (1, 'why', '12345', '2021-12-16 16:55:16', '2021-12-16 16:55:16');
-INSERT INTO `users` VALUES (2, 'kobe', '123', '2021-12-16 17:51:31', '2021-12-16 17:51:31');
-INSERT INTO `users` VALUES (3, 'six', '12345', '2021-12-17 09:52:26', '2021-12-17 09:52:26');
-INSERT INTO `users` VALUES (4, 'lilei', '12345', '2021-12-17 10:22:11', '2021-12-17 10:22:11');
-INSERT INTO `users` VALUES (5, 'lucy', '827ccb0eea8a706c4c34a16891f84e7b', '2021-12-17 10:43:06', '2021-12-17 10:43:06');
+INSERT INTO `users` VALUES (1, 'why', '12345', '2021-12-16 16:55:16', '2021-12-16 16:55:16', NULL);
+INSERT INTO `users` VALUES (2, 'kobe', '123', '2021-12-16 17:51:31', '2021-12-16 17:51:31', NULL);
+INSERT INTO `users` VALUES (3, 'six', '12345', '2021-12-17 09:52:26', '2021-12-17 09:52:26', NULL);
+INSERT INTO `users` VALUES (4, 'lilei', '12345', '2021-12-17 10:22:11', '2021-12-17 10:22:11', NULL);
+INSERT INTO `users` VALUES (5, 'lucy', '827ccb0eea8a706c4c34a16891f84e7b', '2021-12-17 10:43:06', '2021-12-27 11:40:25', 'http://localhost:8888/users/5/avatar');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

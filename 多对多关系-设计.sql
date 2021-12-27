@@ -1,0 +1,112 @@
+# 1.创建数据表
+CREATE TABLE IF NOT EXISTS `students`(
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+	`name` VARCHAR(20) NOT NULL,
+	`age` INT
+);
+
+
+CREATE TABLE IF NOT EXISTS `courses`(
+ `id` INT PRIMARY KEY AUTO_INCREMENT,
+ `name` VARCHAR(20) NOT NULL,
+ `price` DOUBLE
+);
+
+INSERT INTO `students` (name,age) VALUES ('why',18);
+INSERT INTO `students` (name,age) VALUES ('tom',22);
+INSERT INTO `students` (name,age) VALUES ('lilei',25);
+INSERT INTO `students` (name,age) VALUES ('lucy',16);
+INSERT INTO `students` (name,age) VALUES ('lily',20);
+
+
+INSERT INTO `courses` (name,price) VALUES ('英语',100);
+INSERT INTO `courses` (name,price) VALUES ('语文',666);
+INSERT INTO `courses` (name,price) VALUES ('数学',888);
+INSERT INTO `courses` (name,price) VALUES ('历史',99);
+INSERT INTO `courses` (name,price) VALUES ('物理',999);
+INSERT INTO `courses` (name,price) VALUES ('地理',333);
+
+#2.基本数据模拟，建立关系表
+CREATE TABLE IF NOT EXISTS `students_select_courses`(
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+	`student_id` INT NOT NULL,
+	`course_id` INT NOT NULL,
+	FOREIGN KEY(student_id) REFERENCES students(id) ON UPDATE CASCADE,
+	FOREIGN KEY(course_id) REFERENCES courses(id) ON UPDATE CASCADE
+);
+
+# 3.学生选课
+# why选择了英语，数学，历史
+INSERT INTO `students_select_courses` (student_id,course_id) VALUES (1,1);
+INSERT INTO `students_select_courses` (student_id,course_id) VALUES (1,3);
+INSERT INTO `students_select_courses` (student_id,course_id) VALUES (1,4);
+
+# lilei选择了 语文，历史
+INSERT INTO `students_select_courses` (student_id,course_id) VALUES (3,2);
+INSERT INTO `students_select_courses` (student_id,course_id) VALUES (3,4);
+
+# lily选择了数学，历史
+INSERT INTO `students_select_courses` (student_id,course_id) VALUES (5,3);
+INSERT INTO `students_select_courses` (student_id,course_id) VALUES (5,4);
+
+# 4查询需求
+# 4.1所有有选课的学生，选择了哪些课程
+SELECT stu.id id,stu.name stuName,stu.age stuAge,cs.id csId,cs.name csName,cs.price csPrice
+FROM `students` stu 
+JOIN `students_select_courses` ssc ON stu.id = ssc.student_id
+JOIN `courses` cs ON ssc.course_id = cs.id;
+
+# 4.2查询所有学生的选课情况
+SELECT stu.id id,stu.name stuName,stu.age stuAge,cs.id csId,cs.name csName,cs.price csPrice
+FROM `students` stu
+LEFT JOIN `students_select_courses` ssc ON stu.id = ssc.student_id
+LEFT JOIN `courses` cs ON ssc.course_id = cs.id;
+
+# 4.3查询哪些学生没有选课
+SELECT stu.id id,stu.name stuName,stu.age stuAge,cs.id csId,cs.name csName,cs.price csPrice
+FROM `students` stu
+LEFT JOIN `students_select_courses` ssc ON stu.id = ssc.student_id
+LEFT JOIN `courses` cs ON ssc.course_id = cs.id;
+
+
+
+# 4.4查询哪些课程是没有被选择的
+SELECT stu.id id,stu.name stuName,stu.age stuAge,cs.id csId,cs.name csName,cs.price csPrice
+FROM `students` stu
+LEFT JOIN `students_select_courses` ssc ON stu.id = ssc.student_id
+LEFT JOIN `courses` cs ON ssc.course_id = cs.id
+WHERE cs.id IS NULL;
+
+# 4.5查询哪些课程没有被选择
+SELECT stu.id id,stu.name stuName,stu.age stuAge,cs.id csId,cs.name csName,cs.price csPrice
+FROM `students` stu
+RIGHT JOIN `students_select_courses` ssc ON stu.id = ssc.student_id
+RIGHT JOIN `courses` cs ON ssc.course_id = cs.id
+WHERE stu.id IS NULL;
+
+# 4.6 查询why这个学生选择了 哪些课程
+SELECT stu.id id,stu.name stuName,stu.age stuAge,cs.id csId,cs.name csName,cs.price csPrice
+FROM `students` stu
+LEFT JOIN `students_select_courses` ssc ON stu.id = ssc.student_id
+LEFT JOIN `courses` cs ON ssc.course_id = cs.id
+WHERE stu.id = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
